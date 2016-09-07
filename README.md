@@ -1,4 +1,4 @@
 # Java Learning Note
 
-- [TypeScript](https://github.com/Microsoft/TypeScript)
+- [Java vs C#](https://github.com/ryanlin1986/LearningJava/blob/master/JavaForC%23Developer)
 
