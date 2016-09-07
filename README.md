@@ -1,2 +1,4 @@
-# Java language for C# developer
+# Java Learning Note
+
+- [TypeScript](https://github.com/Microsoft/TypeScript)
 
