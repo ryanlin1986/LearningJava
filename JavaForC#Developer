@@ -1,0 +1,313 @@
+Primitive Data Types:
+Java doesn't have unsigned number type that C# offers.
+
+Java	C#	Difference	Same
+byte	byte	-128~127 in Java	8-bit
+		0~256 in C#
+short	short	-32768~32767 in Java	16-bit
+int	int		32-bit
+long	long		64-bit
+float	float		32-bit
+double	double		64-bit
+char	char		16-bit Single-quoted
+String	string		Double-quoted
+boolean	bool		true/false
+	decimal	Not existed in Java	
+
+Inheritance:
+Both Java&C# can only inherit one base class and implement multiple interfaces, syntax is difference:
+In C#:
+class TestClass : BaseClass, Interface1, Interface2 { }
+In Java:
+class TestClass extends BaseClass implements Interface1,Interface2{}
+
+Interface methods collision:
+In Java, you can implements multiple interfaces, but if there have the same method signature, it process differently between C# and Java.
+In C#, you can explicitly implement a interface method by prefix a interface name, such as
+void Interface1.Method(){}
+In Java, there is no way to achieve this, the implemented method is called no matter which interface the reference object is.
+
+Structs:
+Java doesn't support this.
+
+AnonymousType:
+Java doesn't support anonymous type as C# does.
+Missing this, means you may have to write a lot of DTO in scenario that you want to transfer data between to different system such as web server json service.
+
+Properties:
+Java doesn't have built-in support for property, instead,use the name convernsion like this:
+private String stringValue;
+public String getStringValue() {
+return stringValue;
+}
+
+public void setStringValue(String stringValue) {
+this.stringValue = stringValue;
+}
+
+private boolean booleanValue;
+public boolean isBooleanValue() {
+return booleanValue;
+}
+
+public void setBooleanValue(boolean booleanValue) {
+this.booleanValue = booleanValue;
+}
+
+Note:
+For boolean property, use isXXX() instead of getXXX() to conform to the Java bean convernsion
+
+
+final:
+In java you can declare local variable or parameter with final modifier, which means you can't modify the value in later statements.
+
+Delegate:
+In C# you have delegate which is reference to method, you don't have this feature in Java， instead, you should normally use interface to achieve same functionality.
+The following example shows how to start a thread in C#(use delegate) and java(use interface)
+C#:
+new Thread(new ThreadStart(() =>
+{
+	//Do the work here
+})).Start();
+
+Java:
+new Thread(new Runnable() {
+	public void run() {
+		// Do the work here
+	}
+}).start();
+
+Java 8 because the introduce of lambda expression, so you can use it like this:
+new Thread(()->{
+	// Do the work here
+}).start();
+Finally, catch  up with C#.
+
+
+Extension Methods(C#):
+Java doesn't support this feature.
+
+Default Methods:
+This is a java 8 feature, which allows interface methods to have default implementation.
+So the class implements the interface doesn't have to implement the default interface methods.
+C# doesn't have exactly same feature, but this is kind of like C# abstract class.
+
+
+Contextual keywords:
+	• Both C# and Java use this to get contextual instance object.
+	• The keyword super in java is equivalent of base in C#
+
+Override:
+In C#, you can use override keyword like this to override method:
+public override void Method() { }
+In Java, you use @Override annotation like this
+@Override public void Method(){}
+If you use @Override and there is no base type or interface method called "Method", then a compile error occurs.
+
+Operators:
+Java doesn't have operator overloading which C# offers.
+Java doesn't have the null check operator ?? which C# offers.
+Java doesn't have C# as keyworld equivalent
+instanceof in Java is equivalent of is in C#.
+Java support unsigned bit right shift operator >>> while C# doesn't
+
+String:
+String are immutable in both C# and Java
+	•  Equality
+Because of not operator overloading support in Java, the == and != operator always compare by reference, so,always use String.equals() to compare by String content.
+	• Concatenation
+Both C# and Java have the class StringBuilder, which is not thread-safe, Java also provides StringBuffer which is thread-safe
+
+Note:
+Because the immutable of String, concatenation of String such as (String1+String2) creates new String object in memory, this will cause performance problem, instead, use special optimized class StringBuffer for String Concatenation.
+
+lock/synchronized:
+The synchronized keyword in java is equivelant of lock keyword in C#, synchronized keyword can also be applied at method level, such as:
+synchronized void Test() {}
+
+Note:
+Carefully use synchronized at method level because it will cause the context instance/type locked when calling this method.
+
+Others:
+super(java) is equavelant of base(C#)
+Java doesn't have var keyword in C#.
+
+Main Method:
+C#:
+static void Main(string[] args){}
+Java:
+public static void main(String[] args){}
+
+Note:
+In Java the main method should have exactly the same definition as above
+In C#, the Main method can:
+	• Have any access modifier
+	• The return type can be either void or int
+	• The string[] args parameter is optional.
+
+Yield Enumerator Generator:
+Java doesn't have yield enumerator generator, you have to implement Iterate interface to achieve this.
+
+Generics:
+	• In Java, generics happens at compile-time(runtime in C#).
+Because of this, you won't be able to find generics information by reflection in Java, and any operator requires runtime behavior is not allowed, such as:
+		○ New T()
+		○ obj instance of T
+	• Syntax difference of method generic parameters:
+In C#:
+void Test<T>(T item) where T : BaseClass { }
+In Java:
+<T extends BaseClass> void GenericMethod(T item){}
+	• You can't use primitive as generic type parameter
+	• Implicit syntax:
+ArrayList<String> list=new ArrayList<>()
+	• contravariant
+List<? extends SuperClass>, means T should be SuperClass or its sub class.
+List<? super SubClass>, means T should be SubClass or super class of SubClass
+	•  <?> stands for <? extends Object>
+
+package/namespace:
+package in java is equivalent of namespace in C#.
+Example to import package:
+	• import java.util.ArrayList;
+Import the ArrayList class in org.junit package
+	• import java.util.ArrayList.*;
+Import all static members in org.junit.ArrayList class, so you can use all static methods without class name.
+	• import java.util.*;
+Import all classes in org.util package
+
+Note:
+	• You can use alias for using namespace:
+using win = System.Windows;
+
+
+Attribute/Annotation:
+Annotation is Java equivalent of Attribute in C#
+In C#, use attribute like this:
+[Required]
+Declare attribute like this:
+class DisplayName : Attribute { }
+
+In Java, use annotation like this:
+@Required
+Declare attribute like this:
+@interface Required{}
+
+Annotations for Annotation:
+@Target: Specify where the annotation can be applied, similar to [AttributeClass] in C#
+@Repeatable: Only available in java 1.8 or above, if not applied, you can only use one same annotation class for a target, similar to [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+
+Difference:
+Java support type annotations while C# doesn't
+
+Varaible Parameters:
+In C#:
+void Test(params int[] numbers) { }
+In Java:
+void Test(int... numbers){}
+
+Exception:
+In java, there are two kinds of exception, exceptions of Error, RuntimeException or its subclass are unchecked-exception, all else if checked-exception.
+
+In Java, a method can have explicitly annotated exceptions, like this:
+void Test() thorw Exception;
+The try catch is required when you call this method, or the containing method must explicitly throw the same exception type.
+
+Array:
+You can declare array in Java like this:
+String[] items=.... or String items[]....,
+But only the former is valid C# array declaration.
+
+Java doesn't support multi-dimension array which C# has:
+string[,] items = new string[2, 3];
+
+Both in Java, you can initialize array like this:
+int[] cts = { 30, 15, 34, 30, 67, 26, 22, 11, 19, 24, 68 };
+
+You can initialize array of array in java like this:
+int[][] cts = { { 30, 15, 34 } , { 30, 67, 26, 22, 11, 19, 24, 68 } };
+
+You can't do initialize array of array in this form, instead, you can initialize multi-dimensional array like this:
+int[,] cts = { { 30, 15, 34 }, { 19, 24, 68 } };
+
+
+Note:
+Although it's valid syntax to place brackets after array's name, the convention discourages this form.
+
+Enum:
+If you want to assign a value to enum, you have to do some work in java.
+In C#:
+enum Power { Weak = 1, Moderate = 2, Strong = 3 }
+In Java:
+enum Power {
+	WEAK(1), MODERATE(2), STRONG(3);
+	int strenth;
+
+	private Power(int strenth) {
+		this.strentch = strenth;
+	}
+
+	public int getPower() {
+		return this.strenth;
+	}
+}
+
+Access Modifiers:
+In java, if you don't specify a access modifier, then it will be accessable within the package, this is different in C#, which defaults to private if you not specified.
+In java, there is no internal keyword, so the protected modifier can be accessable within the package.
+
+Note:
+The order of access modifier and static keyword in both java and C# doesn't matter, it's conventionally to put access modifier before static keyword such as public static.
+
+Nested class:
+Both java and C# support nested class, but with big difference:
+In java, nested class can access all the instance members of it's containing class, which can't in C#.
+
+Lambda Expression:
+Lambda expression is supported in java 1.8 version, the syntax is different than C#.
+Use => in C# and -> in java.
+
+foreach(C#)/Enhanced for(java):
+C#:
+foreach (var item in new String[] { "a", "b" }) { }
+
+The foreach target should implement Enumerable interface or else it must be an array type
+
+Java:
+for(String item : new String[]{"a","b"}){}
+
+The for target should implement Iterable interface or else it must be of an array type.
+
+Note:
+Iterable(java)==IEnumerable(C#)
+Iterator(java)==IEnumerator(C#)
+
+Iterator also support backward loop and delete, which is readonly and forward only in C#.
+
+Switch:
+In C#, you have to add break or goto statement at every case clause, unless the case has no body.
+In java, if you don't specify break statement, it will go to next case statement body and so on, even the default clause.
+
+using/try:
+In C#, you can use using on object that implement IDisposable interface:
+using(disposable)
+{
+}
+
+In Java, you can use try on object that implement AutoCloseable interface:
+try(autoCloseable)
+{
+}
+
+Comments:
+	• Both Java and C# support // and /**/ style comments
+	• Comments for intellisense
+C# uses xml-style comments and Java use jdoc style comments(which can be also used for javascript), example of Java comments:
+/**
+* find root article categories
+* 
+* @param count
+*            count to return
+* @return root article categories
+*/
+List<ArticleCategory> findRoots(Integer count);
